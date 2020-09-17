@@ -5,10 +5,8 @@ import Login from '@/components/login/login'
 
 Vue.use(Router)
 
-
-
 const router = new Router({
-  mode:"history",
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -19,30 +17,30 @@ const router = new Router({
       }
     },
     {
-      path:'/login',
-      name:"Login",
-      component:Login
+      path: '/login',
+      name: 'Login',
+      component: Login
     }
   ]
 })
 
-router.beforeEach((to,form,next)=>{
+router.beforeEach((to, form, next) => {
   // console.log(to)
   // console.log(form)
   // console.log(next)
-  var user=localStorage.getItem("username")
-  if(to.meta.requireAuth){
-    if(user){
+  var user = localStorage.getItem('username')
+
+  if (to.meta.requireAuth) {
+    if (user) {
       next()
-    }else{
+    } else {
       next({
-        path:"/login"
+        path: '/login'
       })
     }
-  }else{
+  } else {
     next()
   }
-
 })
 
 export default router
