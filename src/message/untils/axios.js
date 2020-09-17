@@ -2,7 +2,7 @@ import Vue from 'vue'
 import axios from 'axios'
 
 const locale = localStorage.getItem('lan')
-const ERROR_DEFAULT = locale == 'en' ? 'Network Error,Please try later' : '网络错误，请稍后重试'
+const ERROR_DEFAULT = locale === 'en' ? 'Network Error,Please try later' : '网络错误，请稍后重试'
 const TOKEN = 'business_token'
 
 const AJAX_VM = new Vue({}) // 创建一个空白vue组件用于调用tip组件的方法
