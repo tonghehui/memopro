@@ -34,104 +34,104 @@ import Vue from 'vue'
 import request from '../../message/untils/request'
 import { getErrorMsg } from '../../message/untils/tool'
 export default {
-    data () {
-        return {
-        romData: {
-            account: '', // 账号
-            paddWord: '' // 密码
-        },
-        vuexs: '',
-        isLogin: true,
-        registerData: {
-            account: '', // 账号
-            userName: '', // 用户名
-            passWord: '', // 密码
-            phone: '', // 手机号
-            code: '', // 验证码
-            surepass: '' // 确定密码
-        },
-        rules: {
+  data () {
+    return {
+      romData: {
+        account: '', // 账号
+        paddWord: '' // 密码
+      },
+      vuexs: '',
+      isLogin: true,
+      registerData: {
+        account: '', // 账号
+        userName: '', // 用户名
+        passWord: '', // 密码
+        phone: '', // 手机号
+        code: '', // 验证码
+        surepass: '' // 确定密码
+      },
+      rules: {
 
-        },
-        lan: ''
-        }
-    },
-    created () {
-        this.lan = localStorage.getItem('lan')
-        this.vuexs = this.$store
-        this.vuexs.dispatch('changeStateName', 'thhs')
-        this.getRules()
-    },
-    updated () {
-        const lan = localStorage.getItem('lan')
-        if (this.lan !== lan) {
-        this.lan = lan
-        this.getRules()
-        }
-    },
-    computed: {
-
-    },
-    watch: {},
-    methods: {
-        // 登录
-        getLogin () {
-        const _this = this
-        if (!_this.romData.userName) {
-            _this.$message(_this.$i18n.t('allOver.pleaseInput') + _this.$i18n.t('loginMes.account'))
-            return
-        }
-        if (!_this.romData.paddWord) {
-            _this.$message(_this.$i18n.t('allOver.pleaseInput') + _this.$i18n.t('loginMes.passWord'))
-        }
-
-        request.loginInfo(_this.romData)
-            .then(res => {
-            if (res.code === 200) {
-                console.log(res.data)
-            } else {
-                _this.$message(getErrorMsg(res.msg, localStorage.getItem('lan')))
-            }
-            }).catch(err => {
-            _this.$message(getErrorMsg(err, localStorage.getItem('lan')))
-            })
-        },
-        // 显示注册页面
-        goRegister () {
-        this.isLogin = false
-        },
-        // 注册
-        getRegister () {
-        console.log(this.registerData)
-        },
-        getRules () {
-        this.rules = {
-            account: [
-            { required: true, message: this.$i18n.t('loginMes.pleaseAccount'), trigger: 'blur' },
-            { min: 5, max: 16, message: this.$i18n.t('loginMes.accountLen'), trigger: 'blur' }
-            ],
-            userName: [
-            { required: true, message: this.$i18n.t('loginMes.pleaseUsername'), trigger: 'blur' },
-            { min: 3, max: 6, message: this.$i18n.t('loginMes.usernameLen'), trigger: 'blur' }
-            ],
-            phone: [
-            { required: true, message: this.$i18n.t('loginMes.pleasePhone'), trigger: 'blur' },
-            { min: 11, max: 11, message: this.$i18n.t('loginMes.phoneLen'), trigger: 'blur' }
-            ],
-            passWord: [
-            { required: true, message: this.$i18n.t('loginMes.pleasePassword'), trigger: 'blur' },
-            { min: 3, max: 18, message: this.$i18n.t('loginMes.passwordLen'), trigger: 'blur' }
-            ],
-            code: [
-            { required: true, message: this.$i18n.t('loginMes.pleaseCode'), trigger: 'blur' }
-            ],
-            surepass: [
-            { required: true, message: this.$i18n.t('loginMes.surePassErr'), trigger: 'blur' }
-            ]
-        }
-        }
-
+      },
+      lan: ''
     }
+  },
+  created () {
+    this.lan = localStorage.getItem('lan')
+    this.vuexs = this.$store
+    this.vuexs.dispatch('changeStateName', 'thhs')
+    this.getRules()
+  },
+  updated () {
+    const lan = localStorage.getItem('lan')
+    if (this.lan !== lan) {
+      this.lan = lan
+      this.getRules()
+    }
+  },
+  computed: {
+
+  },
+  watch: {},
+  methods: {
+    // 登录
+    getLogin () {
+      const _this = this
+      if (!_this.romData.userName) {
+        _this.$message(_this.$i18n.t('allOver.pleaseInput') + _this.$i18n.t('loginMes.account'))
+        return
+      }
+      if (!_this.romData.paddWord) {
+        _this.$message(_this.$i18n.t('allOver.pleaseInput') + _this.$i18n.t('loginMes.passWord'))
+      }
+
+      request.loginInfo(_this.romData)
+        .then(res => {
+          if (res.code === 200) {
+            console.log(res.data)
+          } else {
+            _this.$message(getErrorMsg(res.msg, localStorage.getItem('lan')))
+          }
+        }).catch(err => {
+          _this.$message(getErrorMsg(err, localStorage.getItem('lan')))
+        })
+    },
+    // 显示注册页面
+    goRegister () {
+      this.isLogin = false
+    },
+    // 注册
+    getRegister () {
+      console.log(this.registerData)
+    },
+    getRules () {
+      this.rules = {
+        account: [
+          { required: true, message: this.$i18n.t('loginMes.pleaseAccount'), trigger: 'blur' },
+          { min: 5, max: 16, message: this.$i18n.t('loginMes.accountLen'), trigger: 'blur' }
+        ],
+        userName: [
+          { required: true, message: this.$i18n.t('loginMes.pleaseUsername'), trigger: 'blur' },
+          { min: 3, max: 6, message: this.$i18n.t('loginMes.usernameLen'), trigger: 'blur' }
+        ],
+        phone: [
+          { required: true, message: this.$i18n.t('loginMes.pleasePhone'), trigger: 'blur' },
+          { min: 11, max: 11, message: this.$i18n.t('loginMes.phoneLen'), trigger: 'blur' }
+        ],
+        passWord: [
+          { required: true, message: this.$i18n.t('loginMes.pleasePassword'), trigger: 'blur' },
+          { min: 3, max: 18, message: this.$i18n.t('loginMes.passwordLen'), trigger: 'blur' }
+        ],
+        code: [
+          { required: true, message: this.$i18n.t('loginMes.pleaseCode'), trigger: 'blur' }
+        ],
+        surepass: [
+          { required: true, message: this.$i18n.t('loginMes.surePassErr'), trigger: 'blur' }
+        ]
+      }
+    }
+
+  }
 }
 </script>
 <style  lang="scss">
