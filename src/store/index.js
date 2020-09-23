@@ -5,17 +5,24 @@ Vue.use(Vuex)
 const state = {
   userName: '',
   password: '',
-  name: ''
+  name: '',
+  users: ''
 }
 const mutations = {
   changeName (state, params) {
     state.name = params
+  },
+  changeUser (state, params) {
+    state.users = params
   }
 
 }
 const actions = {
   changeStateName (context, params) {
     context.commit('changeName', params)
+  },
+  changeStateUser (context, params) {
+    context.commit('changeUser', params)
   }
 }
 const getters = {

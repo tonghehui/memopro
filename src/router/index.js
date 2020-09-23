@@ -25,10 +25,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, form, next) => {
-  // console.log(to)
-  // console.log(form)
-  // console.log(next)
-  var user = localStorage.getItem('username')
+  var user = localStorage.getItem('userName')
 
   if (to.meta.requireAuth) {
     if (user) {

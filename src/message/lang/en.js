@@ -30,7 +30,9 @@ module.exports = {
     phoneLen: 'The phone number should be 11 digits in length',
     usernameLen: 'The user name is between 3 and 6 characters long',
     passwordLen: 'The password length is between 3 and 18',
-    surePassErr: 'The two passwords do not match'
+    surePassErr: 'The two passwords do not match',
+    pleaseAgainPass: 'Please enter your password again',
+    registerIn: 'Register success'
   },
   apiMsg: {
     fulltime: 'Request timeout，please check the network',

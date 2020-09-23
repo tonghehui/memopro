@@ -29,7 +29,9 @@ module.exports = {
     usernameLen: '用户名长度在3~6个字符',
     phoneLen: '手机号长度应为11位',
     passwordLen: '密码长度在3~18之间',
-    surePassErr: '两次密码不一致'
+    surePassErr: '两次密码不一致',
+    pleaseAgainPass: '请再次输入密码',
+    registerIn: '注册成功'
   },
   apiMsg: {
     fulltime: '请求超时，请检查网络',

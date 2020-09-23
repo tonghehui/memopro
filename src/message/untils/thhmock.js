@@ -1,7 +1,6 @@
 const Mock = require('mockjs')
-const lan = localStorage.getItem('lan')
+// const lan = localStorage.getItem('lan')
 // 后台管理登录
-console.log(lan)
 const loginInSuccess = {
   code: 200,
   msg: 'success',
@@ -13,12 +12,20 @@ const loginInSuccess = {
 
   }
 }
-const loginInFail = {
-  code: 403,
-  msg: '无此用户，请先注册'
+// const loginInFail = {
+//   code: 403,
+//   msg: '无此用户，请先注册'
+// }
+const registerSuss = {
+  code: 200,
+  msg: '注册成功，可以去登录啦'
 }
 
 Mock.mock('/login', 'post', options => {
   return loginInSuccess
   // return loginInFail
+})
+
+Mock.mock('/register', 'post', options => {
+  return registerSuss
 })

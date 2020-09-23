@@ -24,13 +24,11 @@
                     el-input(:placeholder="$t('loginMes.passWord')" type="password" v-model="registerData.passWord" size="mini")
                 el-form-item(:label="$t('loginMes.surePass')" prop="surepass")
                     el-input(:placeholder="$t('loginMes.surePass')" type="password" v-model="registerData.surepass" size="mini")
-
-            div.loginBtnBox
-                el-button(size="small" @click="getRegister" type="primary") {{$t('loginMes.register')}}
-
+                el-form-item
+                  el-button(size="small" @click="getRegister" type="primary") {{$t('loginMes.register')}}
 </template>
 <script>
-import Vue from 'vue'
+
 import request from '../../message/untils/request'
 import { getErrorMsg } from '../../message/untils/tool'
 export default {
@@ -59,7 +57,6 @@ export default {
   created () {
     this.lan = localStorage.getItem('lan')
     this.vuexs = this.$store
-    this.vuexs.dispatch('changeStateName', 'thhs')
     this.getRules()
   },
   updated () {
@@ -88,12 +85,14 @@ export default {
       request.loginInfo(_this.romData)
         .then(res => {
           if (res.code === 200) {
-            console.log(res.data)
+            localStorage.setItem('userName', res.data.userName)
+            _this.vuexs.dispatch('changeStateUser', res.data)
+            _this.$router.push({ name: '/Index' })
           } else {
-            _this.$message(getErrorMsg(res.msg, localStorage.getItem('lan')))
+            _this.$message(getErrorMsg(res.msg, _this.lan))
           }
         }).catch(err => {
-          _this.$message(getErrorMsg(err, localStorage.getItem('lan')))
+          _this.$message(getErrorMsg(err, _this.lan))
         })
     },
     // 显示注册页面
@@ -102,9 +101,47 @@ export default {
     },
     // 注册
     getRegister () {
+      const _this = this
       console.log(this.registerData)
+      this.$refs.registerData.validate((valid) => {
+        if (valid) {
+          request.registerInfo(_this.registerData)
+            .then(res => {
+              if (res.code === 200) {
+                _this.$message.success(_this.$i18n.t('loginMes.registerIn'))
+                _this.isLogin = true
+                _this.clearRegis()
+              } else {
+                _this.$message(getErrorMsg(res.msg, _this.lan))
+              }
+            }).catch(err => {
+              _this.$message(getErrorMsg(err, _this.lan))
+            })
+        } else {
+          return false
+        }
+      })
+    },
+    clearRegis () {
+      this.registerData = {
+        account: '', // 账号
+        userName: '', // 用户名
+        passWord: '', // 密码
+        phone: '', // 手机号
+        code: '', // 验证码
+        surepass: '' // 确定密码
+      }
     },
     getRules () {
+      var validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error(this.$i18n.t('loginMes.pleaseAgainPass')))
+        } else if (value !== this.registerData.passWord) {
+          callback(new Error(this.$i18n.t('loginMes.surePassErr')))
+        } else {
+          callback()
+        }
+      }
       this.rules = {
         account: [
           { required: true, message: this.$i18n.t('loginMes.pleaseAccount'), trigger: 'blur' },
@@ -126,7 +163,7 @@ export default {
           { required: true, message: this.$i18n.t('loginMes.pleaseCode'), trigger: 'blur' }
         ],
         surepass: [
-          { required: true, message: this.$i18n.t('loginMes.surePassErr'), trigger: 'blur' }
+          { validator: validatePass, trigger: 'blur' }
         ]
       }
     }
@@ -139,16 +176,18 @@ export default {
     .loginHtml{
         width: 100%;
         height: 100%;
-        overflow: hidden;
+        // overflow: hidden;
         background-image: url('../../assets/heijie.jpg');
         background-repeat: no-repeat;
         background-size: 100% 100%;
+        color: white;
         .loginBox{
             width: 1000px;
-            margin:13% auto;
+            margin:0 auto;
+            padding-top: 13%;
             text-align: center;
             .inputBox{
-                margin: 30px 0;
+                padding: 30px 0;
                 .tit{
                     color: white;
                     width: 100px;
@@ -159,8 +198,12 @@ export default {
                     width:300px;
                 }
             }
-            .loginBtnBox{
-                text-align: center;
+            .el-form-item__label{
+              color: white;
+            }
+            .el-form {
+              width: 500px;
+              margin: 0 auto;
             }
         }
     }
